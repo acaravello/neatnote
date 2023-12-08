@@ -3,3 +3,10 @@ ion-menu-button {
     color: var(--ion-color-primary);
   }
   
+.grid-container {
+  height: 100%;
+}
+
+.app-main-row {
+  height: calc(100% - 56px);
+}

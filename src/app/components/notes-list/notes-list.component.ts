@@ -9,6 +9,6 @@ import { IonicModule } from "@ionic/angular";
     imports: [IonicModule]
 })
 
-export class NotesList {
+export class NotesListComponent {
 
 }

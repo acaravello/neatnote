@@ -1,0 +1,17 @@
+
+ion-toolbar {
+    --background: var(--ion-color-primary);
+    --color: #fff;
+}
+
+ion-content::part(background) {
+    background: var(--ion-color-primary);
+}
+
+ion-content::part(scroll) {
+    color: #fff;
+}
+
+.note-detail-container {
+    padding: 16px 4px 16px 32px;
+}
