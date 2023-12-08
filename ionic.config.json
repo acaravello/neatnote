@@ -1,0 +1,7 @@
+{
+  "name": "neatnote",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
