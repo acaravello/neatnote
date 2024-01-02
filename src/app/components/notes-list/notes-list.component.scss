@@ -14,5 +14,27 @@ ion-content::part(scroll) {
 }
 
 .notes-list-container {
-    padding: 16px 4px 16px 32px;
+    padding: 16px 4px 16px 0px;
 }
+
+.note-container {
+    ion-item {
+        cursor: pointer;
+        --background: transparent;
+        --border-color: var(--ion-color-step-600, #666666);
+        &.item-selected {
+            --background: rgba(51, 97, 204, 0.4);
+            --border-color: transparent;
+            p {
+                color: #fff;
+            }
+        }
+        &.previous-of-selected {
+            --border-color: transparent;
+        }
+        h2 {
+            color: #fff;
+        }
+    }
+}
+
