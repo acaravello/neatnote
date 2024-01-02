@@ -10,7 +10,7 @@
   <ion-content>
     <div class="notes-list-container">
       <div class="note-container" *ngFor="let note of notesToDisplay">
-          <ion-item [class]="{'item-selected': note.id === noteSelected, 'previous-of-selected': checkPreviousOfSelected(note.id)}" (click)="onSetSelectedNote(note.id)">
+          <ion-item [class]="{'item-selected': note.id === noteSelected, 'previous-of-selected': checkPreviousOfSelected(note.id)}" (click)="onSetSelectedNote(note)">
             <ion-label>
               <h2> {{note.excerpt}} </h2>
               <p> {{ note.fullContent}} </p>

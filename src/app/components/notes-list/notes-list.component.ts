@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
+import { Subscription } from "rxjs";
 import { Note } from "src/app/interfaces/note";
 import { NotesService } from "src/app/services/notes.service";
 
@@ -17,18 +18,17 @@ export class NotesListComponent {
     sectionTitle: string = 'All Notes';
     notesToDisplay: Note[] = [];
     noteSelected: string = '';
+    subscription: Subscription;
 
-    constructor(notesService: NotesService) {
+    constructor(private notesService: NotesService) {
         const showAllNotes = notesService.getMenuSectionVisible();
         if(!showAllNotes) this.sectionTitle = 'Trash'
         this.notesToDisplay = notesService.getNotes();
-        if(this.notesToDisplay && this.notesToDisplay.length > 0) {
-            this.noteSelected = this.notesToDisplay[0].id;
-        }
+        this.subscription = notesService.noteSelected$.subscribe(note => this.noteSelected = note.id);
     }
 
-    onSetSelectedNote(noteId: string) {
-        this.noteSelected = noteId;
+    onSetSelectedNote(noteSelected: Note) {
+        this.notesService.updateNoteSelected(noteSelected);
     }
 
     checkPreviousOfSelected(noteId: string) {
