@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { Subscription } from "rxjs";
 import { Note } from "src/app/interfaces/note";
@@ -13,18 +13,18 @@ import { NotesService } from "src/app/services/notes.service";
     imports: [IonicModule, CommonModule]
 })
 
-export class NotesListComponent {
+export class NotesListComponent implements OnDestroy{
 
-    sectionTitle: string = 'All Notes';
     notesToDisplay: Note[] = [];
     noteSelected: string = '';
     subscription: Subscription;
+    subscriptionMenu: Subscription;
+    showAllNotes: boolean = true;
 
     constructor(private notesService: NotesService) {
-        const showAllNotes = notesService.getMenuSectionVisible();
-        if(!showAllNotes) this.sectionTitle = 'Trash'
         this.notesToDisplay = notesService.getNotes();
         this.subscription = notesService.noteSelected$.subscribe(note => this.noteSelected = note.id);
+        this.subscriptionMenu = notesService.showAllNotes$.subscribe(show => this.showAllNotes = show);
     }
 
     onSetSelectedNote(noteSelected: Note) {
@@ -37,5 +37,10 @@ export class NotesListComponent {
             return true;
         } 
         return false;
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+        this.subscriptionMenu.unsubscribe();
     }
 }

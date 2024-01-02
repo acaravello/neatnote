@@ -6,9 +6,9 @@ import { BehaviorSubject } from "rxjs";
 
 export class NotesService {
 
-    showAllNotesNotTrash: boolean = true;
     private allNotes: Note[] = [{ id: 'n1', excerpt: 'buy more books', fullContent: 'buy more books. buy more books.' }, { id: 'n2', excerpt: 'do abs workout', fullContent: 'do many many abs. Repeat.' }];
     noteSelected$: BehaviorSubject<Note> = new BehaviorSubject<Note>(this.allNotes[0]);
+    showAllNotes$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
     getNotes() {
         return [...this.allNotes];
@@ -32,11 +32,8 @@ export class NotesService {
     }
 
     toggleListSection(showAllNotes: boolean) {
-        this.showAllNotesNotTrash = showAllNotes
+        this.showAllNotes$.next(showAllNotes)
     }
 
-    getMenuSectionVisible() {
-        return this.showAllNotesNotTrash;
-    }
 }
 

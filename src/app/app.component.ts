@@ -1,17 +1,21 @@
 import { Component } from '@angular/core';
+import { NotesService } from './services/notes.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
-  ];
+
+  appPages = [ { id:"notes", title: 'All Notes', icon: 'file-tray-stacked' }, { id: 'trash', title: 'Trash', icon: 'trash' }];
+  itemSelectedId: string = 'notes'
+
+  constructor(private notesService: NotesService) {}
+
+  onClickMenuItem(id: string) {
+    const toggle = id === 'trash' ? false : true;
+    this.notesService.toggleListSection(toggle);
+    this.itemSelectedId = toggle ? 'notes' : 'trash';
+  }
   
 }

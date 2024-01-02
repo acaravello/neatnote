@@ -21,6 +21,8 @@ ion-content::part(scroll) {
     ion-item {
         cursor: pointer;
         --background: transparent;
+        --background-hover: #2c3338;
+        --background-hover-opacity: .5;
         --border-color: var(--ion-color-step-600, #666666);
         &.item-selected {
             --background: rgba(51, 97, 204, 0.4);
@@ -37,4 +39,6 @@ ion-content::part(scroll) {
         }
     }
 }
+
+
 
