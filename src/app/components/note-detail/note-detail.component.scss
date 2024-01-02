@@ -15,3 +15,21 @@ ion-content::part(scroll) {
 .note-detail-container {
     padding: 16px 4px 16px 32px;
 }
+
+ion-list {
+    background: transparent;
+}
+
+ ion-textarea, ion-item {
+    --background: transparent;
+    --border-color: transparent;
+    --color: #fff;
+}
+
+.note-detail-container, ion-list, ion-item {
+    height: 100%;
+}
+
+ion-textarea {
+    height: 100vh
+}

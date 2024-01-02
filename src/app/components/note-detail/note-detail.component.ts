@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { Subscription } from "rxjs";
 import { Note } from "src/app/interfaces/note";
@@ -12,13 +12,20 @@ import { NotesService } from "src/app/services/notes.service";
     imports: [IonicModule]
 })
 
-export class NoteDetailComponent {
+export class NoteDetailComponent implements OnInit{
 
     noteSelected: Note | null = null;
-    subscription: Subscription
+    subscription: Subscription;
 
     constructor(private notesService: NotesService) {
         this.subscription = this.notesService.noteSelected$.subscribe(note => this.noteSelected = note);
+    }
+
+    ngOnInit(): void {
+        setTimeout(() => {
+        const textArea = document.getElementsByTagName('textarea')[0];
+        textArea.style.caretColor = '#fff';
+        }, 1000);
     }
 
 }

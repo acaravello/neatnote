@@ -6,6 +6,10 @@
   </ion-header>
   <ion-content>
     <div class="note-detail-container">
-        {{noteSelected?.excerpt}}
+        <ion-list>
+          <ion-item>
+            <ion-textarea [value]="noteSelected?.fullContent"></ion-textarea>
+          </ion-item>
+        </ion-list>
     </div>
   </ion-content>
