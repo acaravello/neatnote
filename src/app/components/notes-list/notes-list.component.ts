@@ -17,12 +17,13 @@ export class NotesListComponent implements OnDestroy{
 
     notesToDisplay: Note[] = [];
     noteSelected: string = '';
+    allNotesSubscription: Subscription;
     subscription: Subscription;
     subscriptionMenu: Subscription;
     showAllNotes: boolean = true;
 
     constructor(private notesService: NotesService) {
-        this.notesToDisplay = notesService.getNotes();
+        this.allNotesSubscription = notesService.allNotes$.subscribe(notes => this.notesToDisplay = notes);
         this.subscription = notesService.noteSelected$.subscribe(note => this.noteSelected = note.id);
         this.subscriptionMenu = notesService.showAllNotes$.subscribe(show => this.showAllNotes = show);
     }
@@ -40,6 +41,7 @@ export class NotesListComponent implements OnDestroy{
     }
 
     ngOnDestroy(): void {
+        this.allNotesSubscription.unsubscribe();
         this.subscription.unsubscribe();
         this.subscriptionMenu.unsubscribe();
     }

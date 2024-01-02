@@ -28,4 +28,9 @@ export class NoteDetailComponent implements OnInit{
         }, 1000);
     }
 
+    onTextAreaChange(event: any) {
+        if(this.noteSelected?.id && event?.detail?.value) {
+            this.notesService.editNote(this.noteSelected.id, event.detail.value);
+        }
+    }
 }

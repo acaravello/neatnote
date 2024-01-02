@@ -8,7 +8,7 @@
     <div class="note-detail-container">
         <ion-list>
           <ion-item>
-            <ion-textarea [value]="noteSelected?.fullContent"></ion-textarea>
+            <ion-textarea [value]="noteSelected?.fullContent" (ionInput)="onTextAreaChange($event)"></ion-textarea>
           </ion-item>
         </ion-list>
     </div>
