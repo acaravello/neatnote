@@ -1,15 +1,63 @@
 
 <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title>only icons here</ion-title>
+      <ion-buttons slot="secondary">
+        <ion-button (click)="onOpenModal('info')" class="info-button">
+          <ion-icon slot="icon-only" name="information-circle-outline" ></ion-icon>
+        </ion-button>
+        <ion-button (click)="onOpenModal('delete')">
+          <ion-icon slot="icon-only" name="trash-outline" color="danger"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <div class="note-detail-container">
-        <ion-list>
-          <ion-item>
+        <ion-list class="textarea-list">
+          <ion-item class="textarea-container">
             <ion-textarea [value]="noteSelected?.fullContent" (ionInput)="onTextAreaChange($event)"></ion-textarea>
           </ion-item>
         </ion-list>
     </div>
+      <ion-modal [isOpen]="isInfoModalOpen">
+      <ng-template>
+        <ion-content>
+          <ion-toolbar>
+            <ion-title>Document</ion-title>
+            <ion-buttons slot="end">
+              <ion-button color="light" (click)="onCloseModal('info')">Close</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+          <ion-list>
+            <ion-item>
+              <ion-label>
+                <h2>here info for the note</h2>
+                <p>here content info</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <ion-modal [isOpen]="isConfirmDeleteModalOpen" class="confirm-modal">
+      <ng-template>
+        <ion-content>
+          <ion-toolbar>
+            <ion-title>Move to trash</ion-title>
+          </ion-toolbar>
+          <p class="ion-padding-horizontal">Do you want to move to trash this note?</p>
+          <ion-toolbar>
+            <ion-buttons slot="secondary">
+              <ion-button (click)="onCloseModal('delete')">Cancel</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="primary">
+              <ion-button>Confirm</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
   </ion-content>
+
+
+

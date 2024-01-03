@@ -26,10 +26,14 @@ ion-list {
     --color: #fff;
 }
 
-.note-detail-container, ion-list, ion-item {
+.note-detail-container, ion-list.textarea-list, ion-item.textarea-container {
     height: 100%;
 }
 
 ion-textarea {
     height: 100vh
+}
+
+.info-button {
+    margin-right: -5px !important;
 }
