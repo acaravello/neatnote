@@ -40,5 +40,11 @@ ion-content::part(scroll) {
     }
 }
 
+.excerpt-container {
+    overflow: hidden;
+    white-space:nowrap;
+}
 
-
+.overflow-ellipsis {
+    text-overflow: ellipsis;
+}
