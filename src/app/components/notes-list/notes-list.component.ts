@@ -16,15 +16,18 @@ import { NotesService } from "src/app/services/notes.service";
 export class NotesListComponent implements OnDestroy{
 
     notesToDisplay: Note[] = [];
+    trashedNoteToDisplay: Note[] = [];
     noteSelected: string = '';
     allNotesSubscription: Subscription;
+    trashedNotesSubscription: Subscription;
     subscription: Subscription;
     subscriptionMenu: Subscription;
     showAllNotes: boolean = true;
 
     constructor(private notesService: NotesService) {
         this.allNotesSubscription = notesService.allNotes$.subscribe(notes => this.notesToDisplay = notes);
-        this.subscription = notesService.noteSelected$.subscribe(note => this.noteSelected = note.id);
+        this.trashedNotesSubscription = notesService.trashedNotes$.subscribe(notes => this.trashedNoteToDisplay = notes);
+        this.subscription = notesService.noteSelected$.subscribe(note => note && (this.noteSelected = note.id));
         this.subscriptionMenu = notesService.showAllNotes$.subscribe(show => this.showAllNotes = show);
     }
 
@@ -42,6 +45,7 @@ export class NotesListComponent implements OnDestroy{
 
     ngOnDestroy(): void {
         this.allNotesSubscription.unsubscribe();
+        this.trashedNotesSubscription.unsubscribe();
         this.subscription.unsubscribe();
         this.subscriptionMenu.unsubscribe();
     }

@@ -1,7 +1,7 @@
 
 <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-buttons slot="secondary">
+      <ion-buttons slot="secondary" *ngIf="noteSelected">
         <ion-button (click)="onOpenModal('info')" class="info-button">
           <ion-icon slot="icon-only" name="information-circle-outline" ></ion-icon>
         </ion-button>
@@ -12,10 +12,10 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <div class="note-detail-container">
+    <div class="note-detail-container" *ngIf="noteSelected">
         <ion-list class="textarea-list">
           <ion-item class="textarea-container">
-            <ion-textarea [value]="noteSelected?.fullContent" (ionInput)="onTextAreaChange($event)"></ion-textarea>
+            <ion-textarea [value]="noteSelected.fullContent" (ionInput)="onTextAreaChange($event)"></ion-textarea>
           </ion-item>
         </ion-list>
     </div>
@@ -51,7 +51,7 @@
               <ion-button (click)="onCloseModal('delete')">Cancel</ion-button>
             </ion-buttons>
             <ion-buttons slot="primary">
-              <ion-button>Confirm</ion-button>
+              <ion-button color="danger" (click)="onDeleteNote()">Confirm</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-content>

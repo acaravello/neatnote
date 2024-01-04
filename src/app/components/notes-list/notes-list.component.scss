@@ -48,3 +48,20 @@ ion-content::part(scroll) {
 .overflow-ellipsis {
     text-overflow: ellipsis;
 }
+
+.no-notes-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trash-message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8c8f94;
+    ion-icon {
+        font-size: 2rem;
+    }
+}

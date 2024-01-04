@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnDestroy } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
 import { Subscription, interval } from "rxjs";
@@ -9,7 +10,7 @@ import { NotesService } from "src/app/services/notes.service";
     selector: 'app-note-detail',
     styleUrl: './note-detail.component.scss',
     templateUrl: './note-detail.component.html',
-    imports: [IonicModule]
+    imports: [IonicModule, CommonModule]
 })
 
 export class NoteDetailComponent implements OnDestroy {
@@ -43,6 +44,11 @@ export class NoteDetailComponent implements OnDestroy {
     onCloseModal(modalName: string) {
         modalName === 'info' && (this.isInfoModalOpen = false);
         modalName === 'delete' && (this.isConfirmDeleteModalOpen = false);
+    }
+
+    onDeleteNote() {
+        this.noteSelected &&  this.notesService.deleteNote(this.noteSelected);
+        this.isConfirmDeleteModalOpen = false;
     }
 
     ngOnDestroy() {
