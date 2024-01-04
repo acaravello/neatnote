@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { IonicModule } from "@ionic/angular";
-import { Subscription } from "rxjs";
+import { Subscription, interval } from "rxjs";
 import { Note } from "src/app/interfaces/note";
 import { NotesService } from "src/app/services/notes.service";
 
@@ -12,22 +12,21 @@ import { NotesService } from "src/app/services/notes.service";
     imports: [IonicModule]
 })
 
-export class NoteDetailComponent implements OnInit{
+export class NoteDetailComponent implements OnDestroy {
 
     noteSelected: Note | null = null;
     subscription: Subscription;
+    intervalSubscription: Subscription;
     isInfoModalOpen: boolean = false;
     isConfirmDeleteModalOpen: boolean = false;
 
     constructor(private notesService: NotesService) {
         this.subscription = this.notesService.noteSelected$.subscribe(note => this.noteSelected = note);
-    }
-
-    ngOnInit(): void {
-        setTimeout(() => {
-        const textArea = document.getElementsByTagName('textarea')[0];
-        textArea.style.caretColor = '#fff';
-        }, 2000);
+        const source = interval(500);
+        this.intervalSubscription = source.subscribe(val => {
+            const textArea = document.getElementsByTagName('textarea')[0];
+            if(textArea) textArea.style.caretColor = '#fff';
+        })
     }
 
     onTextAreaChange(event: any) {
@@ -44,6 +43,11 @@ export class NoteDetailComponent implements OnInit{
     onCloseModal(modalName: string) {
         modalName === 'info' && (this.isInfoModalOpen = false);
         modalName === 'delete' && (this.isConfirmDeleteModalOpen = false);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+        this.intervalSubscription.unsubscribe();
     }
 
 }
