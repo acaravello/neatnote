@@ -57,6 +57,11 @@ export class NotesListComponent implements OnDestroy{
         this.isEmptyTrashModalOpen = false;
     }
 
+    onAddNewNote() {
+        const newNote: Note = {id: Date.now().toString(), excerpt: 'New Note...', fullContent: ''};
+        this.notesService.addNote(newNote);
+    }
+
     ngOnDestroy(): void {
         this.allNotesSubscription.unsubscribe();
         this.trashedNotesSubscription.unsubscribe();

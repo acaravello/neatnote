@@ -40,8 +40,7 @@ export class NoteDetailComponent implements OnDestroy {
                 this.notesService.editNote(this.noteSelected.id, stringSplitted[0], event.detail.value);
             } else {
                 this.notesService.editTrashNote(this.noteSelected.id, stringSplitted[0], event.detail.value);
-            }
-            
+            }            
         }
     }
 
@@ -60,7 +59,6 @@ export class NoteDetailComponent implements OnDestroy {
     }
 
     onRestoreNote() {
-        console.log("restoring note")
         const updatedNotes = this.notesService.allNotes$.value;
         this.noteSelected && updatedNotes.unshift(this.noteSelected);
         this.notesService.allNotes$.next(updatedNotes);

@@ -7,7 +7,7 @@ import { NotesService } from './services/notes.service';
 })
 export class AppComponent {
 
-  appPages = [ { id:"notes", title: 'All Notes', icon: 'file-tray-stacked' }, { id: 'trash', title: 'Trash', icon: 'trash' }];
+  appPages = [ { id:"notes", title: 'All Notes', icon: 'newspaper' }, { id: 'trash', title: 'Trash', icon: 'trash' }];
   itemSelectedId: string = 'notes'
 
   constructor(private notesService: NotesService) {}

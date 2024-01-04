@@ -56,7 +56,7 @@ ion-content::part(scroll) {
     justify-content: center;
 }
 
-.trash-message-container {
+.trash-message-container, .no-notes-message-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,6 +83,13 @@ ion-content::part(scroll) {
         ion-button {
             --color: #84a4f0;
         }
+    }
+}
+
+.new-note-button {
+    margin-right: 5px;
+    ion-icon {
+        font-size: 1.4rem;
     }
 }
 

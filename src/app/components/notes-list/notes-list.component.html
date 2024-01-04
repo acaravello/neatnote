@@ -5,19 +5,30 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title>{{ showAllNotes ? 'All Notes' : 'Trash' }}</ion-title>
+      <ion-buttons slot="end" *ngIf="showAllNotes">
+        <ion-button (click)="onAddNewNote()" class="new-note-button"><ion-icon slot="icon-only" name="add-outline"></ion-icon></ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <div [class]="showAllNotes || trashedNoteToDisplay.length > 0 ? 'notes-list-container' : 'no-notes-container' ">
+    <div [class]="(showAllNotes && notesToDisplay.length > 0)|| ( !showAllNotes && trashedNoteToDisplay.length > 0) ? 'notes-list-container' : 'no-notes-container' ">
       <ng-container *ngIf="showAllNotes; else trashNotesTemplate">
-        <div class="note-container" *ngFor="let note of notesToDisplay">
-          <ion-item [class]="{'item-selected': note.id === noteSelected, 'previous-of-selected': checkPreviousOfSelected(note.id)}" (click)="onSetSelectedNote(note)">
-            <ion-label class="excerpt-container">
-              <h2> {{note.excerpt}} </h2>
-              <p class="overflow-ellipsis"> {{ note.fullContent}} </p>
-            </ion-label>
-          </ion-item>
-      </div>
+        <ng-container *ngIf="notesToDisplay.length > 0; else noNotesTemplate">
+          <div class="note-container" *ngFor="let note of notesToDisplay">
+            <ion-item [class]="{'item-selected': note.id === noteSelected, 'previous-of-selected': checkPreviousOfSelected(note.id)}" (click)="onSetSelectedNote(note)">
+              <ion-label class="excerpt-container">
+                <h2> {{note.excerpt}} </h2>
+                <p class="overflow-ellipsis"> {{ note.fullContent}} </p>
+              </ion-label>
+            </ion-item>
+        </div>
+        </ng-container>
+        <ng-template #noNotesTemplate>
+          <div class="no-notes-message-container">
+            <ion-icon name="clipboard-outline"></ion-icon>
+            <p>You have no notes</p>
+          </div>
+        </ng-template>
       </ng-container>
       <ng-template #trashNotesTemplate>
         <ng-container *ngIf="trashedNoteToDisplay.length > 0; else noTrashedNotesTemplate">
@@ -25,7 +36,7 @@
             <ion-item [class]="{'item-selected': note.id === noteSelected, 'previous-of-selected': checkPreviousOfSelected(note.id)}" (click)="onSetSelectedNote(note)">
               <ion-label class="excerpt-container">
                 <h2> {{note.excerpt}} </h2>
-                <p class="overflow-ellipsis"> {{ note.fullContent}} </p>
+                <p class="overflow-ellipsis"> {{note.fullContent}} </p>
               </ion-label>
             </ion-item>
         </div>
