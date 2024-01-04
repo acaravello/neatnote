@@ -23,6 +23,7 @@ export class NotesListComponent implements OnDestroy{
     subscription: Subscription;
     subscriptionMenu: Subscription;
     showAllNotes: boolean = true;
+    isEmptyTrashModalOpen: boolean = false;
 
     constructor(private notesService: NotesService) {
         this.allNotesSubscription = notesService.allNotes$.subscribe(notes => this.notesToDisplay = notes);
@@ -41,6 +42,19 @@ export class NotesListComponent implements OnDestroy{
             return true;
         } 
         return false;
+    }
+
+    onOpenTrashModal() {
+        this.isEmptyTrashModalOpen = true;
+    }
+
+    onCloseTrashModal() {
+        this.isEmptyTrashModalOpen = false;
+    }
+
+    onEmptyTrash() {
+        this.notesService.emptyTrash();
+        this.isEmptyTrashModalOpen = false;
     }
 
     ngOnDestroy(): void {

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Note } from "../interfaces/note";
 import { BehaviorSubject } from "rxjs";
 
-const mockNotes =  [{ id: 'n1', excerpt: 'buy more books', fullContent: 'buy more books. buy more books.' }, { id: 'n2', excerpt: 'eat more vegetables', fullContent: 'eat vegetables. They\'re healty.' }]
+const mockNotes =  [{ id: 'n1', excerpt: 'buy more books', fullContent: 'buy more books. and read them.' }, { id: 'n2', excerpt: 'eat more vegetables', fullContent: 'eat vegetables. They\'re healty.' }]
 
 @Injectable({providedIn: 'root'})
 
@@ -24,10 +24,16 @@ export class NotesService {
         this.allNotes$.next(updatedNotes)
     }
 
-    editNote(noteId: string, noteContent: string) {
+    editNote(noteId: string, noteExcerpt: string, noteContent: string) {
         let updatedNotes = this.allNotes$.value;
-        updatedNotes = updatedNotes.map(note => note.id === noteId ? {...note, fullContent: noteContent} : note);
+        updatedNotes = updatedNotes.map(note => note.id === noteId ? {...note, excerpt: noteExcerpt, fullContent: noteContent} : note);
         this.allNotes$.next(updatedNotes);
+    }
+
+    editTrashNote(noteId: string, noteExcerpt: string, noteContent: string) {
+        let updatedTrashNotes = this.trashedNotes$.value;
+        updatedTrashNotes = updatedTrashNotes.map(note => note.id === noteId ? {...note, excerpt: noteExcerpt, fullContent: noteContent} : note);
+        this.trashedNotes$.next(updatedTrashNotes);
     }
 
     deleteNote(originalNote: Note) {
@@ -38,6 +44,19 @@ export class NotesService {
         udpdatedTrashedNotes.push(originalNote);
         this.trashedNotes$.next(udpdatedTrashedNotes);
         this.noteSelected$.next(this.allNotes$.value[0])
+    }
+
+    deleteTrashNote(noteFromTrash: Note) {
+        let updatedTrashNotes = this.trashedNotes$.value;
+        updatedTrashNotes = updatedTrashNotes.filter(note => note.id !== noteFromTrash.id);
+        console.log("updated trash notes are ", updatedTrashNotes);
+        this.trashedNotes$.next(updatedTrashNotes);
+        this.noteSelected$.next(updatedTrashNotes.length > 0 ? updatedTrashNotes[0] : null);
+    }
+
+    emptyTrash() {
+        this.trashedNotes$.next([]);
+        this.noteSelected$.next(null);
     }
 
     updateNoteSelected(note: Note) {

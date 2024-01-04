@@ -8,7 +8,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <div [class]="showAllNotes ? 'notes-list-container' : 'no-notes-container' ">
+    <div [class]="showAllNotes || trashedNoteToDisplay.length > 0 ? 'notes-list-container' : 'no-notes-container' ">
       <ng-container *ngIf="showAllNotes; else trashNotesTemplate">
         <div class="note-container" *ngFor="let note of notesToDisplay">
           <ion-item [class]="{'item-selected': note.id === noteSelected, 'previous-of-selected': checkPreviousOfSelected(note.id)}" (click)="onSetSelectedNote(note)">
@@ -38,6 +38,27 @@
         </ng-template>
       </ng-template>
     </div>
+    <div *ngIf="!showAllNotes && trashedNoteToDisplay.length > 0" class="delete-trash-footer">
+      <div class="delete-trash-container" ><ion-button (click)="onOpenTrashModal()">Empty Trash</ion-button></div>
+    </div>
+    <ion-modal [isOpen]="isEmptyTrashModalOpen" class="confirm-modal">
+      <ng-template>
+        <ion-content>
+          <ion-toolbar>
+            <ion-title>Empty Trash</ion-title>
+          </ion-toolbar>
+          <p class="ion-padding-horizontal">Are you sure you want to empty the trash?</p>
+          <ion-toolbar>
+            <ion-buttons slot="secondary">
+              <ion-button class="cancel-button" (click)="onCloseTrashModal()">Cancel</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="primary">
+              <ion-button color="danger"  class="confirm-button" (click)="onEmptyTrash()">Confirm</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
   </ion-content>
   
 

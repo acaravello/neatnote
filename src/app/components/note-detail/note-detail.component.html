@@ -1,14 +1,24 @@
 
 <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-buttons slot="secondary" *ngIf="noteSelected">
-        <ion-button (click)="onOpenModal('info')" class="info-button">
-          <ion-icon slot="icon-only" name="information-circle-outline" ></ion-icon>
-        </ion-button>
-        <ion-button (click)="onOpenModal('delete')">
-          <ion-icon slot="icon-only" name="trash-outline" color="danger"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+      <ng-container *ngIf="noteSelected">
+        <ng-container *ngIf="showAllNotes; else showTrashButtonsTemplate">
+          <ion-buttons slot="secondary">
+            <ion-button (click)="onOpenModal('info')" class="info-button">
+              <ion-icon slot="icon-only" name="information-circle-outline" ></ion-icon>
+            </ion-button>
+            <ion-button (click)="onDeleteNote()">
+              <ion-icon slot="icon-only" name="trash-outline" color="danger"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ng-container>
+        <ng-template #showTrashButtonsTemplate>
+          <ion-buttons slot="secondary">
+            <ion-button class="cancel-button" (click)="onRestoreNote()">restore note</ion-button>
+            <ion-button class="confirm-button" color="danger" (click)="onOpenModal('delete')">delete forever</ion-button>
+          </ion-buttons>
+        </ng-template>
+      </ng-container>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -43,15 +53,15 @@
       <ng-template>
         <ion-content>
           <ion-toolbar>
-            <ion-title>Move to trash</ion-title>
+            <ion-title>Delete Forever</ion-title>
           </ion-toolbar>
-          <p class="ion-padding-horizontal">Do you want to move to trash this note?</p>
+          <p class="ion-padding-horizontal">Do you want to delete this note?</p>
           <ion-toolbar>
             <ion-buttons slot="secondary">
-              <ion-button (click)="onCloseModal('delete')">Cancel</ion-button>
+              <ion-button class="cancel-button" (click)="onCloseModal('delete')">Cancel</ion-button>
             </ion-buttons>
             <ion-buttons slot="primary">
-              <ion-button color="danger" (click)="onDeleteNote()">Confirm</ion-button>
+              <ion-button color="danger"  class="confirm-button" (click)="onDeleteNoteForever()">Confirm</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-content>

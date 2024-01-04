@@ -65,3 +65,24 @@ ion-content::part(scroll) {
         font-size: 2rem;
     }
 }
+
+.delete-trash-footer {
+    position: absolute;
+    bottom: 10px;
+    height: 40px;
+    width: 100%;
+    border-top: 1px solid #2c3338;
+    margin-top: 10px;
+    .delete-trash-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        margin-top: 5px;
+        font-size: .8rem;
+        ion-button {
+            --color: #84a4f0;
+        }
+    }
+}
+
