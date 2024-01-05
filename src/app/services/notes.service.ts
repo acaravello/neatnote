@@ -2,7 +2,9 @@ import { Injectable } from "@angular/core";
 import { Note } from "../interfaces/note";
 import { BehaviorSubject } from "rxjs";
 
-const mockNotes =  [{ id: 'n1', excerpt: 'buy more books', fullContent: 'buy more books. and read them.' }, { id: 'n2', excerpt: 'eat more vegetables', fullContent: 'eat vegetables. They\'re healthy.' }]
+const mockNotes =  [
+    { id: 'n1', excerpt: 'buy more books', fullContent: 'buy more books. and read them.', created: '01 01 2024, 06:00', modified: '', words: 6, characters: 29 }, 
+    { id: 'n2', excerpt: 'eat more vegetables', fullContent: 'eat vegetables. They\'re healthy.', created: '01 01 2024, 06:00', modified: '', words: 4, characters: 31}]
 
 @Injectable({providedIn: 'root'})
 
@@ -12,6 +14,13 @@ export class NotesService {
     trashedNotes$: BehaviorSubject<Note[]> = new BehaviorSubject<Note[]>([]);
     noteSelected$: BehaviorSubject<Note | null> = new BehaviorSubject<Note | null>(this.allNotes$.value[0]);
     showAllNotes$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+    getNowDateFormatted() {
+        const date = new Date();
+        const dateFormatted = `${date.getDate() < 10 ? '0' + date.getDate(): date.getDate()} ${date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1 } 
+        ${date.getFullYear()} , ${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes()}`;
+        return dateFormatted;
+    }
 
     getNote(noteId: string) {
         const noteIdentified = this.allNotes$.value.find(note => note.id === noteId);
@@ -25,17 +34,29 @@ export class NotesService {
         this.noteSelected$.next(note);
     }
 
-    editNote(noteId: string, noteExcerpt: string, noteContent: string) {
+    editNote(noteSelected: Note, noteExcerpt: string, noteContent: string) {
+        const dateFormatted = this.getNowDateFormatted();
+        const totalWords =  noteContent.trim().split(/\s+/).filter(word => word.length > 1).length;
+        const totalCharacters = noteContent.length - 1;
         let updatedNotes = this.allNotes$.value;
-        updatedNotes = updatedNotes.map(note => note.id === noteId ? {...note, excerpt: noteExcerpt, fullContent: noteContent} : note);
-        this.noteSelected$.next({id: noteId, excerpt: noteExcerpt, fullContent: noteContent});
+        updatedNotes = updatedNotes.map(note => note.id === noteSelected.id ? {...note, 
+            excerpt: noteExcerpt, fullContent: noteContent, 
+            modified: dateFormatted, words: totalWords, characters: totalCharacters} : note);
+        this.noteSelected$.next({ ...noteSelected, excerpt: noteExcerpt, fullContent: noteContent, modified: dateFormatted, words: totalWords, characters: totalCharacters });
         this.allNotes$.next(updatedNotes);
     }
 
-    editTrashNote(noteId: string, noteExcerpt: string, noteContent: string) {
+    editTrashNote(noteSelected: Note, noteExcerpt: string, noteContent: string) {
+        const date = new Date();
+        const dateFormatted = `${date.getDate() < 10 ? '0' + date.getDate(): date.getDate()} ${date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1 } 
+        ${date.getFullYear()} , ${date.getHours() < 10 ? '0' + date.getHours() : date.getHours()}:${date.getMinutes()}`;
+        const totalWords =  noteContent.trim().split(/\s+/).filter(word => word.length > 1).length;
+        const totalCharacters = noteContent.length - 1;
         let updatedTrashNotes = this.trashedNotes$.value;
-        updatedTrashNotes = updatedTrashNotes.map(note => note.id === noteId ? {...note, excerpt: noteExcerpt, fullContent: noteContent} : note);
-        this.noteSelected$.next({id: noteId, excerpt: noteExcerpt, fullContent: noteContent});
+        updatedTrashNotes = updatedTrashNotes.map(note => note.id === noteSelected.id ? {...note, 
+            excerpt: noteExcerpt, fullContent: noteContent, 
+            modified: dateFormatted, words: totalWords, characters: totalCharacters} : note);
+        this.noteSelected$.next({ ...noteSelected, excerpt: noteExcerpt, fullContent: noteContent, modified: dateFormatted, words: totalWords, characters: totalCharacters });
         this.trashedNotes$.next(updatedTrashNotes);
     }
 

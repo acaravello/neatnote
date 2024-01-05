@@ -37,9 +37,9 @@ export class NoteDetailComponent implements OnDestroy {
         if(this.noteSelected?.id && event?.detail?.value) {
             const stringSplitted = event.detail.value.split(/[.,\n]+/);
             if(this.showAllNotes) {
-                this.notesService.editNote(this.noteSelected.id, stringSplitted[0], event.detail.value);
+                this.notesService.editNote(this.noteSelected, stringSplitted[0], event.detail.value);
             } else {
-                this.notesService.editTrashNote(this.noteSelected.id, stringSplitted[0], event.detail.value);
+                this.notesService.editTrashNote(this.noteSelected, stringSplitted[0], event.detail.value);
             }            
         }
     }

@@ -29,7 +29,7 @@
           </ion-item>
         </ion-list>
     </div>
-      <ion-modal [isOpen]="isInfoModalOpen">
+      <ion-modal [isOpen]="isInfoModalOpen" class="info-note-modal">
       <ng-template>
         <ion-content>
           <ion-toolbar>
@@ -38,13 +38,11 @@
               <ion-button color="light" (click)="onCloseModal('info')">Close</ion-button>
             </ion-buttons>
           </ion-toolbar>
-          <ion-list>
-            <ion-item>
-              <ion-label>
-                <h2>here info for the note</h2>
-                <p>here content info</p>
-              </ion-label>
-            </ion-item>
+          <ion-list *ngIf="noteSelected">
+            <ion-item class="info-modal-item"><ion-label class="info-on-note" class="info-on-note"><h2>Created</h2><p>{{noteSelected.created}}</p></ion-label></ion-item>
+            <ion-item *ngIf="noteSelected.modified.length > 0" class="info-modal-item"><ion-label class="info-on-note"><h2>Modified</h2><p>{{noteSelected.modified}}</p></ion-label></ion-item>
+            <ion-item class="info-modal-item"><ion-label class="info-on-note"><h2>Words</h2><p>{{noteSelected.words}}</p></ion-label></ion-item>
+            <ion-item class="info-modal-item"><ion-label class="info-on-note"><h2>Characters</h2><p>{{noteSelected.characters}}</p></ion-label></ion-item>
           </ion-list>
         </ion-content>
       </ng-template>

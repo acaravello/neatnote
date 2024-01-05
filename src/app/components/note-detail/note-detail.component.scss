@@ -46,3 +46,13 @@ ion-textarea {
     margin-right: 10px;
     font-size: .8rem;
 }
+
+.info-on-note {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-modal-item {
+    --min-height: 40px;
+}

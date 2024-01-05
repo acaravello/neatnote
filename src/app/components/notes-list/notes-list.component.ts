@@ -58,7 +58,8 @@ export class NotesListComponent implements OnDestroy{
     }
 
     onAddNewNote() {
-        const newNote: Note = {id: Date.now().toString(), excerpt: 'New Note...', fullContent: ''};
+        const dateFormatted = this.notesService.getNowDateFormatted();
+        const newNote: Note = {id: Date.now().toString(), excerpt: 'New Note...', fullContent: '', created: dateFormatted, modified: '', words: 0, characters: 0};
         this.notesService.addNote(newNote);
     }
 
