@@ -52,7 +52,7 @@
     <div *ngIf="!showAllNotes && trashedNoteToDisplay.length > 0" class="delete-trash-footer">
       <div class="delete-trash-container" ><ion-button (click)="onOpenTrashModal()">Empty Trash</ion-button></div>
     </div>
-    <ion-modal [isOpen]="isEmptyTrashModalOpen" class="confirm-modal">
+    <ion-modal [isOpen]="isEmptyTrashModalOpen" class="confirm-modal" (didDismiss)="onCloseTrashModal()">
       <ng-template>
         <ion-content>
           <ion-toolbar>

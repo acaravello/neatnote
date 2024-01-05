@@ -29,7 +29,7 @@
           </ion-item>
         </ion-list>
     </div>
-      <ion-modal [isOpen]="isInfoModalOpen" class="info-note-modal">
+      <ion-modal [isOpen]="isInfoModalOpen" class="info-note-modal" (didDismiss)="onCloseModal('info')">
       <ng-template>
         <ion-content>
           <ion-toolbar>
@@ -47,7 +47,7 @@
         </ion-content>
       </ng-template>
     </ion-modal>
-    <ion-modal [isOpen]="isConfirmDeleteModalOpen" class="confirm-modal">
+    <ion-modal [isOpen]="isConfirmDeleteModalOpen" class="confirm-modal" (didDismiss)="onCloseModal('delete')">
       <ng-template>
         <ion-content>
           <ion-toolbar>
