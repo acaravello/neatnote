@@ -1,16 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Note } from "../interfaces/note";
 import { BehaviorSubject } from "rxjs";
-
-const mockNotes =  [
-    { id: 'n1', excerpt: 'buy more books', fullContent: 'buy more books. and read them.', created: '01 01 2024, 06:00', modified: '', words: 6, characters: 29 }, 
-    { id: 'n2', excerpt: 'eat more vegetables', fullContent: 'eat vegetables. They\'re healthy.', created: '01 01 2024, 06:00', modified: '', words: 4, characters: 31}]
+import { mockNotes } from "../data/mocked-notes";
 
 @Injectable({providedIn: 'root'})
 
 export class NotesService {
 
-    allNotes$: BehaviorSubject<Note[]> = new BehaviorSubject<Note[]>(mockNotes);
+    allNotes$: BehaviorSubject<Note[]> = new BehaviorSubject<Note[]>(mockNotes.reverse());
     trashedNotes$: BehaviorSubject<Note[]> = new BehaviorSubject<Note[]>([]);
     noteSelected$: BehaviorSubject<Note | null> = new BehaviorSubject<Note | null>(this.allNotes$.value[0]);
     showAllNotes$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
